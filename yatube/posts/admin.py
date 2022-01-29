@@ -3,7 +3,6 @@ from .models import Post, Group
 
 
 class PostAdmin(admin.ModelAdmin):
-    # Перечисляем поля, которые должны отображаться в админке
     list_display = (
         'pk',
         'text',
