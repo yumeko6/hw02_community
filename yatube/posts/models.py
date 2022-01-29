@@ -1,14 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import CharField
-# Create your models here.
 
 
 User = get_user_model()
 
 
 class Post(models.Model):
-    objects = None
+    ordering = ['-pub_date']
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
@@ -20,7 +19,7 @@ class Post(models.Model):
         'Group',
         blank=True,
         null=True,
-        on_delete=models.CASCADE
+        on_delete=models.SET_NULL
     )
 
 
