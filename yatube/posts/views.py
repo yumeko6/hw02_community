@@ -2,11 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Group
 
 
-last_posts = 10
+LAST_POSTS = 10
 
 
 def index(request):
-    posts = Post.objects.all()[:last_posts]
+    posts = Post.objects.all()[:LAST_POSTS]
     context = {
         'posts': posts,
         'title': 'Последние обновления на сайте',
@@ -16,7 +16,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = Post.objects.filter(group=group).all()[:last_posts]
+    posts = Post.objects.filter(group=group).all()[:LAST_POSTS]
     context = {
         'group': group,
         'posts': posts,
