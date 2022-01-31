@@ -22,6 +22,9 @@ class Post(models.Model):
         on_delete=models.SET_NULL
     )
 
+    def __str__(self):
+        return self.text
+
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
