@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Group
+from .models import Post, Group, User
 
 
 def index(request):
@@ -21,6 +21,7 @@ def group_posts(request, slug):
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     context = {
         'group': group,
         'page_obj': page_obj,
@@ -28,3 +29,27 @@ def group_posts(request, slug):
     }
 
     return render(request, 'posts/group_list.html', context)
+
+
+def profile(request, username):
+    post_author = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=post_author).all().order_by('-pub_date')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    count = Post.objects.count()
+    context = {
+        'username': post_author,
+        'title': f'Профайл пользователя {post_author}',
+        'page_obj': page_obj,
+        'count': count,
+    }
+    return render(request, 'posts/profile.html', context)
+
+
+def post_detail(request, post_id):
+    title_text = Post.text[:30]
+    context = {
+        'title': f'Пост {title_text}'
+    }
+    return render(request, 'posts/post_detail.html', context)
