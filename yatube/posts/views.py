@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
+from django.template.defaultfilters import truncatewords
+
 from .models import Post, Group, User
 
 
@@ -48,8 +50,11 @@ def profile(request, username):
 
 
 def post_detail(request, post_id):
-    title_text = Post.text[:30]
+    post = Post.objects.get(id=post_id)
+    count = Post.objects.count()
     context = {
-        'title': f'Пост {title_text}'
+        'post': post,
+        'title': f'Пост {truncatewords(post.text, 30)}',
+        'count': count,
     }
     return render(request, 'posts/post_detail.html', context)
