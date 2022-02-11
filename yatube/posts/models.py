@@ -19,7 +19,7 @@ class Post(models.Model):
         'Group',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
     )
 
     def __str__(self):
