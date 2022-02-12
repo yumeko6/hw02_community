@@ -13,3 +13,16 @@ class PasswordChange(FormView):
     form_class = PasswordForm
     success_url = reverse_lazy('users:password_change_done')
     template_name = 'users/password_change_form.html'
+
+
+class PasswordReset(FormView):
+    form_class = PasswordForm
+    success_url = reverse_lazy('users:password_reset_done')
+    template_name = 'users/password_reset_form.html'
+
+
+class PasswordResetConfirm(FormView):
+    form_class = PasswordForm
+    success_url = reverse_lazy('users:password_reset_complete')
+    template_name = 'users/password_reset_confirm.html'
+

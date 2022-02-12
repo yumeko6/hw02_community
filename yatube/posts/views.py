@@ -54,7 +54,7 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = Post.objects.get(id=post_id)
-    count = Post.objects.count()
+    count = Post.objects.filter(author=post.author).count()
     context = {
         'post': post,
         'title': f'Пост {truncatewords(post.text, 30)}',
