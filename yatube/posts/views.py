@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.defaultfilters import truncatewords
@@ -77,5 +78,26 @@ def post_create(request):
     context = {
         'form': form,
         'title': 'Новый пост',
+    }
+    return render(request, 'posts/create_post.html', context)
+
+
+@login_required
+def post_edit(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        return redirect('posts:post_detail', post_id)
+    is_edit = True
+    form = PostForm(instance=post)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('posts:post_detail', post_id)
+    context = {
+        'form': form,
+        'title': 'Редактировать пост',
+        'post': post,
+        'is_edit': is_edit,
     }
     return render(request, 'posts/create_post.html', context)

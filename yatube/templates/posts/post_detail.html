@@ -8,8 +8,8 @@
       </li>
       {% if post.group %}
       <li class="list-group-item">
-        Группа: {{ group.title }}
-        <a href="{% url 'posts:group_list' post.group.slug %}">
+        Группа: {{ post.group.title }}
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:group_list' post.group.slug %}">
           все записи группы
         </a>
       </li>
@@ -21,7 +21,7 @@
         Всего постов автора:  <span >{{ count }}</span>
       </li>
       <li class="list-group-item">
-        <a href="{% url 'posts:profile' post.author %}">
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:profile' post.author %}">
           все посты пользователя
         </a>
       </li>
